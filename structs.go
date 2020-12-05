@@ -174,5 +174,57 @@ type Order struct {
 	Env     string      `json:"env"`
 }
 
+type BlacklistCreation struct {
+	Status int `json:"status"`
+	Data   struct {
+		Uniqid string `json:"uniqid"`
+	} `json:"data"`
+	Message string      `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
+}
+
+type BlacklistSpec struct {
+	Status int `json:"status"`
+	Data   struct {
+		Blacklist struct {
+			ID        int    `json:"id"`
+			Uniqid    string `json:"uniqid"`
+			Scope     string `json:"scope"`
+			ShopID    int    `json:"shop_id"`
+			Type      string `json:"type"`
+			Data      string `json:"data"`
+			Note      string `json:"note"`
+			CreatedAt int    `json:"created_at"`
+			UpdatedAt int    `json:"updated_at"`
+			UpdatedBy int    `json:"updated_by"`
+		} `json:"blacklist"`
+	} `json:"data"`
+	Message interface{} `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
+}
+
 type Blacklist struct {
+	Status int `json:"status"`
+	Data   struct {
+		Blacklists []struct {
+			ID        int    `json:"id"`
+			Uniqid    string `json:"uniqid"`
+			Scope     string `json:"scope"`
+			ShopID    int    `json:"shop_id"`
+			Type      string `json:"type"`
+			Data      string `json:"data"`
+			Note      string `json:"note"`
+			CreatedAt int    `json:"created_at"`
+			UpdatedAt int    `json:"updated_at"`
+			UpdatedBy int    `json:"updated_by"`
+		} `json:"blacklists"`
+	} `json:"data"`
+	Message interface{} `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
 }
