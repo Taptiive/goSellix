@@ -8,7 +8,7 @@ This project is still on development.
 # How to use
 _First, you need to create a Sellix Client with your API key that you can find [here](https://dashboard.sellix.io/settings/security)_
 ```
-    sellixClient := goSellix.NewClient(YOUR_API_KEY)
+sellixClient := goSellix.NewClient(YOUR_API_KEY)
 ```
 
 # License
