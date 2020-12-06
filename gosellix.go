@@ -33,6 +33,116 @@ func NewClient(authKey string) SellixClient {
 	}
 }
 
+func (r SellixClient) GetAllQueries() Queries {
+	r.Method = "GET"
+	r.Url = "https://dev.sellix.io/v1/queries"
+	req, _ := http.NewRequest(r.Method, r.Url, nil)
+	req.Header.Add("Authorization", "Bearer "+r.AuthKey)
+	r.Request = *req
+	buf := r.getBody()
+	var SellixQuery Queries
+	err := json.Unmarshal(buf, &SellixQuery)
+	if err != nil {
+		return Queries{}
+	}
+	return SellixQuery
+}
+
+func (r SellixClient) GetAllProducts() Product {
+	r.Method = "GET"
+	r.Url = "https://dev.sellix.io/v1/products"
+	req, _ := http.NewRequest(r.Method, r.Url, nil)
+	req.Header.Add("Authorization", "Bearer "+r.AuthKey)
+	r.Request = *req
+	buf := r.getBody()
+	var SellixProduct Product
+	err := json.Unmarshal(buf, &SellixProduct)
+	if err != nil {
+		return Product{}
+	}
+	return SellixProduct
+}
+
+func (r SellixClient) GetAllFeedbacks() Feedback {
+	r.Method = "GET"
+	r.Url = "https://dev.sellix.io/v1/feedback"
+	req, _ := http.NewRequest(r.Method, r.Url, nil)
+	req.Header.Add("Authorization", "Bearer "+r.AuthKey)
+	r.Request = *req
+	buf := r.getBody()
+	var SellixFeedback Feedback
+	err := json.Unmarshal(buf, &SellixFeedback)
+	if err != nil {
+		return Feedback{}
+	}
+	return SellixFeedback
+}
+
+func (r SellixClient) FeedbackFromProduct(productUniqid string) UserFeedback {
+	r.Method = "GET"
+	r.Url = "https://dev.sellix.io/v1/feedback/" + productUniqid
+	req, _ := http.NewRequest(r.Method, r.Url, nil)
+	req.Header.Add("Authorization", "Bearer "+r.AuthKey)
+	r.Request = *req
+	buf := r.getBody()
+	var SellixFeedback UserFeedback
+	err := json.Unmarshal(buf, &SellixFeedback)
+	if err != nil {
+		return UserFeedback{}
+	}
+	return SellixFeedback
+}
+
+func (r SellixClient) DeleteCoupon(couponUniqid string) CouponDelete {
+	r.Method = "DELETE"
+	r.Url = "https://dev.sellix.io/v1/coupons/" + couponUniqid
+	req, _ := http.NewRequest(r.Method, r.Url, nil)
+	req.Header.Add("Authorization", "Bearer "+r.AuthKey)
+	r.Request = *req
+	buf := r.getBody()
+	var SellixCoupon CouponDelete
+	err := json.Unmarshal(buf, &SellixCoupon)
+	if err != nil {
+		return CouponDelete{}
+	}
+	return SellixCoupon
+}
+
+func (r SellixClient) MakeCoupon(couponCode string, couponDiscount, couponUses int, couponProducts []string) CouponCreation {
+	r.Method = "POST"
+	r.Url = "https://dev.sellix.io/v1/coupons"
+	payload := map[string]interface{}{"code": couponCode, "discount_value": couponDiscount, "max_uses": couponUses, "products_bound": couponProducts}
+	byts, err := json.Marshal(payload)
+	if err != nil {
+		return CouponCreation{}
+	}
+	req, _ := http.NewRequest(r.Method, r.Url, bytes.NewBuffer(byts))
+	req.Header.Add("Authorization", "Bearer "+r.AuthKey)
+	r.Request = *req
+	buf := r.getBody()
+	var SellixResponse CouponCreation
+	err = json.Unmarshal(buf, &SellixResponse)
+	if err != nil {
+		return CouponCreation{}
+	}
+	return SellixResponse
+}
+
+func (r SellixClient) CouponList() CouponResp {
+	r.Method = "GET"
+	r.Url = "https://dev.sellix.io/v1/coupons"
+	req, _ := http.NewRequest(r.Method, r.Url, nil)
+	req.Header.Add("Authorization", "Bearer "+r.AuthKey)
+	r.Request = *req
+	buf := r.getBody()
+	var SellixResponse CouponResp
+	err := json.Unmarshal(buf, &SellixResponse)
+	if err != nil {
+		return CouponResp{}
+	}
+	return SellixResponse
+}
+
 func (r SellixClient) DeleteBlacklist(blacklistUniqid string) BlacklistCreation {
 	r.Method = "DELETE"
 	r.Url = "https://dev.sellix.io/v1/blacklists/" + blacklistUniqid
@@ -45,7 +155,7 @@ func (r SellixClient) DeleteBlacklist(blacklistUniqid string) BlacklistCreation 
 	if err != nil {
 		return BlacklistCreation{}
 	}
-	return BlacklistCreation{}
+	return SellixBlacklist
 }
 
 func (r SellixClient) EditBlacklist(blacklistUniqid, blacklistType, blacklistData, blacklistMessage string) BlacklistCreation {
@@ -66,7 +176,7 @@ func (r SellixClient) EditBlacklist(blacklistUniqid, blacklistType, blacklistDat
 	if err != nil {
 		return BlacklistCreation{}
 	}
-	return BlacklistCreation{}
+	return SellixBlacklist
 }
 
 func (r SellixClient) CreateBlacklist(blacklistType, blacklistData, blacklistMessage string) BlacklistCreation {
@@ -87,7 +197,7 @@ func (r SellixClient) CreateBlacklist(blacklistType, blacklistData, blacklistMes
 	if err != nil {
 		return BlacklistCreation{}
 	}
-	return BlacklistCreation{}
+	return SellixBlacklist
 }
 
 func (r SellixClient) BlacklistByID(blacklistID string) BlacklistSpec {
@@ -126,16 +236,9 @@ func (r SellixClient) OrderByID(orderUniqID string) Order {
 	req, _ := http.NewRequest(r.Method, r.Url, nil)
 	req.Header.Add("Authorization", "Bearer "+r.AuthKey)
 	r.Request = *req
-	res, err := r.Client.Do(&r.Request)
-	if err != nil {
-		return Order{}
-	}
-	buf, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return Order{}
-	}
+	buf := r.getBody()
 	var SellixOrder Order
-	err = json.Unmarshal(buf, &SellixOrder)
+	err := json.Unmarshal(buf, &SellixOrder)
 	if err != nil {
 		return Order{}
 	}

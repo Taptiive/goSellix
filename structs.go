@@ -174,6 +174,53 @@ type Order struct {
 	Env     string      `json:"env"`
 }
 
+type CouponDelete struct {
+	Status  int         `json:"status"`
+	Data    interface{} `json:"data"`
+	Message string      `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
+}
+
+type CouponCreation struct {
+	Status int `json:"status"`
+	Data   struct {
+		Uniqid string `json:"uniqid"`
+	} `json:"data"`
+	Message string      `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
+}
+
+type CouponResp struct {
+	Status int `json:"status"`
+	Data   struct {
+		Coupons []struct {
+			ID            int         `json:"id"`
+			Uniqid        string      `json:"uniqid"`
+			ShopID        int         `json:"shop_id"`
+			Type          string      `json:"type"`
+			Code          string      `json:"code"`
+			UseType       string      `json:"use_type"`
+			Discount      int         `json:"discount"`
+			Currency      interface{} `json:"currency"`
+			Used          int         `json:"used"`
+			MaxUses       int         `json:"max_uses"`
+			CreatedAt     int         `json:"created_at"`
+			UpdatedAt     int         `json:"updated_at"`
+			UpdatedBy     int         `json:"updated_by"`
+			ProductsBound []string    `json:"products_bound"`
+			ProductsCount int         `json:"products_count"`
+		} `json:"coupons"`
+	} `json:"data"`
+	Message interface{} `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
+}
+
 type BlacklistCreation struct {
 	Status int `json:"status"`
 	Data   struct {
@@ -222,6 +269,241 @@ type Blacklist struct {
 			UpdatedAt int    `json:"updated_at"`
 			UpdatedBy int    `json:"updated_by"`
 		} `json:"blacklists"`
+	} `json:"data"`
+	Message interface{} `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
+}
+
+type Queries struct {
+	Status int `json:"status"`
+	Data   struct {
+		Queries []struct {
+			ID            int    `json:"id"`
+			Uniqid        string `json:"uniqid"`
+			ShopID        int    `json:"shop_id"`
+			InvoiceID     string `json:"invoice_id"`
+			CustomerEmail string `json:"customer_email"`
+			Title         string `json:"title"`
+			Status        string `json:"status"`
+			DayValue      int    `json:"day_value"`
+			Day           string `json:"day"`
+			Month         string `json:"month"`
+			Year          int    `json:"year"`
+			CreatedAt     int    `json:"created_at"`
+			UpdatedAt     int    `json:"updated_at"`
+			UpdatedBy     int    `json:"updated_by"`
+		} `json:"queries"`
+	} `json:"data"`
+	Message interface{} `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
+}
+
+type UserFeedback struct {
+	Status int `json:"status"`
+	Data   struct {
+		Feedback struct {
+			ID        int         `json:"id"`
+			Uniqid    string      `json:"uniqid"`
+			InvoiceID string      `json:"invoice_id"`
+			ProductID string      `json:"product_id"`
+			ShopID    int         `json:"shop_id"`
+			Message   string      `json:"message"`
+			Reply     interface{} `json:"reply"`
+			Score     int         `json:"score"`
+			Blocked   int         `json:"blocked"`
+			Appealed  int         `json:"appealed"`
+			CreatedAt int         `json:"created_at"`
+			UpdatedAt int         `json:"updated_at"`
+			UpdatedBy int         `json:"updated_by"`
+			Invoice   struct {
+				ID                        int         `json:"id"`
+				Uniqid                    string      `json:"uniqid"`
+				Type                      string      `json:"type"`
+				ShopID                    int         `json:"shop_id"`
+				ProductID                 string      `json:"product_id"`
+				ProductType               string      `json:"product_type"`
+				ProductTitle              string      `json:"product_title"`
+				SubscriptionID            interface{} `json:"subscription_id"`
+				SubscriptionTime          interface{} `json:"subscription_time"`
+				Gateway                   string      `json:"gateway"`
+				Quantity                  int         `json:"quantity"`
+				Total                     float64     `json:"total"`
+				TotalDisplay              float64     `json:"total_display"`
+				CouponID                  interface{} `json:"coupon_id"`
+				Discount                  int         `json:"discount"`
+				DiscountDisplay           int         `json:"discount_display"`
+				Currency                  string      `json:"currency"`
+				ExchangeRate              int         `json:"exchange_rate"`
+				CryptoExchangeRate        float64     `json:"crypto_exchange_rate"`
+				CustomerEmail             string      `json:"customer_email"`
+				PaypalEmailDelivery       int         `json:"paypal_email_delivery"`
+				PaypalEmail               interface{} `json:"paypal_email"`
+				PaypalOrderID             interface{} `json:"paypal_order_id"`
+				PaypalAuthorizationID     interface{} `json:"paypal_authorization_id"`
+				PaypalCaptureID           interface{} `json:"paypal_capture_id"`
+				PaypalPayerEmail          interface{} `json:"paypal_payer_email"`
+				PaypalFee                 int         `json:"paypal_fee"`
+				PaypalFeeCurrency         interface{} `json:"paypal_fee_currency"`
+				PaypalAPICredentials      string      `json:"paypal_api_credentials"`
+				LexOrderID                interface{} `json:"lex_order_id"`
+				LexPaymentMethod          interface{} `json:"lex_payment_method"`
+				LexSecret                 interface{} `json:"lex_secret"`
+				SkrillEmail               interface{} `json:"skrill_email"`
+				SkrillSid                 interface{} `json:"skrill_sid"`
+				SkrillLink                interface{} `json:"skrill_link"`
+				StripeID                  interface{} `json:"stripe_id"`
+				StripeClientSecret        interface{} `json:"stripe_client_secret"`
+				StripePriceID             interface{} `json:"stripe_price_id"`
+				StripeSubscriptionID      interface{} `json:"stripe_subscription_id"`
+				PerfectmoneyID            interface{} `json:"perfectmoney_id"`
+				CashappQrcode             interface{} `json:"cashapp_qrcode"`
+				CashappCashtag            interface{} `json:"cashapp_cashtag"`
+				CashappNote               interface{} `json:"cashapp_note"`
+				CryptoAddress             string      `json:"crypto_address"`
+				CryptoAmount              float64     `json:"crypto_amount"`
+				CryptoReceived            float64     `json:"crypto_received"`
+				CryptoURI                 string      `json:"crypto_uri"`
+				CryptoConfirmationsNeeded int         `json:"crypto_confirmations_needed"`
+				CryptoWalletVersion       string      `json:"crypto_wallet_version"`
+				Country                   string      `json:"country"`
+				Location                  string      `json:"location"`
+				IP                        string      `json:"ip"`
+				IsVpnOrProxy              bool        `json:"is_vpn_or_proxy"`
+				UserAgent                 string      `json:"user_agent"`
+				CustomFields              struct {
+				} `json:"custom_fields"`
+				DeveloperInvoice   bool        `json:"developer_invoice"`
+				DeveloperTitle     interface{} `json:"developer_title"`
+				DeveloperWebhook   interface{} `json:"developer_webhook"`
+				DeveloperReturnURL interface{} `json:"developer_return_url"`
+				FeePercentage      int         `json:"fee_percentage"`
+				ToProcess          int         `json:"to_process"`
+				Status             string      `json:"status"`
+				DayValue           int         `json:"day_value"`
+				Day                string      `json:"day"`
+				Month              string      `json:"month"`
+				Year               int         `json:"year"`
+				CreatedAt          int         `json:"created_at"`
+				UpdatedAt          int         `json:"updated_at"`
+				UpdatedBy          int         `json:"updated_by"`
+				Name               string      `json:"name"`
+			} `json:"invoice"`
+			Product struct {
+				ID                        int           `json:"id"`
+				Uniqid                    string        `json:"uniqid"`
+				ShopID                    int           `json:"shop_id"`
+				Type                      string        `json:"type"`
+				Title                     string        `json:"title"`
+				Currency                  string        `json:"currency"`
+				Price                     float64       `json:"price"`
+				PriceDisplay              float64       `json:"price_display"`
+				Description               string        `json:"description"`
+				ImageAttachment           interface{}   `json:"image_attachment"`
+				FileAttachment            interface{}   `json:"file_attachment"`
+				QuantityMin               int           `json:"quantity_min"`
+				QuantityMax               int           `json:"quantity_max"`
+				QuantityWarning           int           `json:"quantity_warning"`
+				Gateways                  []string      `json:"gateways"`
+				CustomFields              []interface{} `json:"custom_fields"`
+				CryptoConfirmationsNeeded int           `json:"crypto_confirmations_needed"`
+				MaxRiskLevel              int           `json:"max_risk_level"`
+				BlockVpnProxies           bool          `json:"block_vpn_proxies"`
+				DeliveryText              string        `json:"delivery_text"`
+				ServiceText               string        `json:"service_text"`
+				StockDelimiter            string        `json:"stock_delimiter"`
+				Stock                     int           `json:"stock"`
+				DynamicWebhook            string        `json:"dynamic_webhook"`
+				SortPriority              int           `json:"sort_priority"`
+				Unlisted                  bool          `json:"unlisted"`
+				OnHold                    int           `json:"on_hold"`
+				TermsOfService            string        `json:"terms_of_service"`
+				Warranty                  int           `json:"warranty"`
+				WarrantyText              string        `json:"warranty_text"`
+				Private                   bool          `json:"private"`
+				CreatedAt                 int           `json:"created_at"`
+				UpdatedAt                 int           `json:"updated_at"`
+				UpdatedBy                 int           `json:"updated_by"`
+				Name                      string        `json:"name"`
+			} `json:"product"`
+		} `json:"feedback"`
+	} `json:"data"`
+	Message interface{} `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
+}
+
+type Feedback struct {
+	Status int `json:"status"`
+	Data   struct {
+		Feedback []struct {
+			ID            int         `json:"id"`
+			Uniqid        string      `json:"uniqid"`
+			InvoiceID     string      `json:"invoice_id"`
+			ProductID     string      `json:"product_id"`
+			ProductTitle  string      `json:"product_title"`
+			ShopID        int         `json:"shop_id"`
+			Message       string      `json:"message"`
+			Reply         interface{} `json:"reply"`
+			Score         int         `json:"score"`
+			Appealed      int         `json:"appealed"`
+			AppealOutcome string      `json:"appeal_outcome"`
+			CreatedAt     int         `json:"created_at"`
+			UpdatedAt     int         `json:"updated_at"`
+			UpdatedBy     int         `json:"updated_by"`
+		} `json:"feedback"`
+	} `json:"data"`
+	Message interface{} `json:"message"`
+	Log     interface{} `json:"log"`
+	Error   interface{} `json:"error"`
+	Env     string      `json:"env"`
+}
+
+type Product struct {
+	Status int `json:"status"`
+	Data   struct {
+		Products []struct {
+			ID                        int           `json:"id"`
+			Uniqid                    string        `json:"uniqid"`
+			ShopID                    int           `json:"shop_id"`
+			Type                      string        `json:"type"`
+			Title                     string        `json:"title"`
+			Currency                  string        `json:"currency"`
+			Price                     float64       `json:"price"`
+			PriceDisplay              float64       `json:"price_display"`
+			Description               string        `json:"description"`
+			ImageAttachment           string        `json:"image_attachment"`
+			FileAttachment            interface{}   `json:"file_attachment"`
+			QuantityMin               int           `json:"quantity_min"`
+			QuantityMax               int           `json:"quantity_max"`
+			QuantityWarning           int           `json:"quantity_warning"`
+			Gateways                  []string      `json:"gateways"`
+			CustomFields              []interface{} `json:"custom_fields"`
+			CryptoConfirmationsNeeded int           `json:"crypto_confirmations_needed"`
+			MaxRiskLevel              int           `json:"max_risk_level"`
+			BlockVpnProxies           bool          `json:"block_vpn_proxies"`
+			DeliveryText              string        `json:"delivery_text"`
+			ServiceText               string        `json:"service_text"`
+			StockDelimiter            string        `json:"stock_delimiter"`
+			Stock                     int           `json:"stock"`
+			DynamicWebhook            string        `json:"dynamic_webhook"`
+			SortPriority              int           `json:"sort_priority"`
+			Unlisted                  bool          `json:"unlisted"`
+			OnHold                    int           `json:"on_hold"`
+			TermsOfService            string        `json:"terms_of_service"`
+			Warranty                  int           `json:"warranty"`
+			WarrantyText              string        `json:"warranty_text"`
+			Private                   bool          `json:"private"`
+			CreatedAt                 int           `json:"created_at"`
+			UpdatedAt                 int           `json:"updated_at"`
+			UpdatedBy                 int           `json:"updated_by"`
+			ImageName                 string        `json:"image_name"`
+			ImageStorage              string        `json:"image_storage"`
+		} `json:"products"`
 	} `json:"data"`
 	Message interface{} `json:"message"`
 	Log     interface{} `json:"log"`
