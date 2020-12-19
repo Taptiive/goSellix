@@ -3,6 +3,7 @@ package goSellix
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -240,6 +241,7 @@ func (r SellixClient) OrderByID(orderUniqID string) Order {
 	var SellixOrder Order
 	err := json.Unmarshal(buf, &SellixOrder)
 	if err != nil {
+		fmt.Println(err)
 		return Order{}
 	}
 	return SellixOrder

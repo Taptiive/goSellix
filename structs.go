@@ -7,24 +7,24 @@ type Order struct {
 			ID                        int           `json:"id"`
 			Uniqid                    string        `json:"uniqid"`
 			Type                      string        `json:"type"`
-			Total                     int           `json:"total"`
-			TotalDisplay              int           `json:"total_display"`
+			Total                     float64       `json:"total"`
+			TotalDisplay              float64       `json:"total_display"`
 			ExchangeRate              int           `json:"exchange_rate"`
-			CryptoExchangeRate        int           `json:"crypto_exchange_rate"`
+			CryptoExchangeRate        float64       `json:"crypto_exchange_rate"`
 			Currency                  string        `json:"currency"`
 			ShopID                    int           `json:"shop_id"`
 			Name                      string        `json:"name"`
 			CustomerEmail             string        `json:"customer_email"`
-			PaypalEmailDelivery       int           `json:"paypal_email_delivery"`
+			PaypalEmailDelivery       float64       `json:"paypal_email_delivery"`
 			ProductID                 string        `json:"product_id"`
 			ProductTitle              string        `json:"product_title"`
 			ProductType               string        `json:"product_type"`
 			SubscriptionID            interface{}   `json:"subscription_id"`
 			SubscriptionTime          interface{}   `json:"subscription_time"`
 			Gateway                   string        `json:"gateway"`
-			PaypalEmail               string        `json:"paypal_email"`
-			PaypalOrderID             string        `json:"paypal_order_id"`
-			PaypalPayerEmail          string        `json:"paypal_payer_email"`
+			PaypalEmail               interface{}   `json:"paypal_email"`
+			PaypalOrderID             interface{}   `json:"paypal_order_id"`
+			PaypalPayerEmail          interface{}   `json:"paypal_payer_email"`
 			PaypalFee                 float64       `json:"paypal_fee"`
 			LexOrderID                interface{}   `json:"lex_order_id"`
 			LexPaymentMethod          interface{}   `json:"lex_payment_method"`
@@ -33,11 +33,11 @@ type Order struct {
 			SkrillSid                 interface{}   `json:"skrill_sid"`
 			SkrillLink                interface{}   `json:"skrill_link"`
 			PerfectmoneyID            interface{}   `json:"perfectmoney_id"`
-			CryptoAddress             interface{}   `json:"crypto_address"`
-			CryptoAmount              int           `json:"crypto_amount"`
-			CryptoReceived            int           `json:"crypto_received"`
-			CryptoURI                 interface{}   `json:"crypto_uri"`
-			CryptoConfirmationsNeeded int           `json:"crypto_confirmations_needed"`
+			CryptoAddress             string        `json:"crypto_address"`
+			CryptoAmount              float64       `json:"crypto_amount"`
+			CryptoReceived            float64       `json:"crypto_received"`
+			CryptoURI                 string        `json:"crypto_uri"`
+			CryptoConfirmationsNeeded float64       `json:"crypto_confirmations_needed"`
 			CashappQrcode             interface{}   `json:"cashapp_qrcode"`
 			CashappNote               interface{}   `json:"cashapp_note"`
 			CashappCashtag            interface{}   `json:"cashapp_cashtag"`
@@ -54,9 +54,9 @@ type Order struct {
 			DeveloperWebhook          interface{}   `json:"developer_webhook"`
 			DeveloperReturnURL        interface{}   `json:"developer_return_url"`
 			Status                    string        `json:"status"`
-			Discount                  int           `json:"discount"`
-			FeePercentage             int           `json:"fee_percentage"`
-			DayValue                  int           `json:"day_value"`
+			Discount                  float64       `json:"discount"`
+			FeePercentage             float64       `json:"fee_percentage"`
+			DayValue                  float64       `json:"day_value"`
 			Day                       string        `json:"day"`
 			Month                     string        `json:"month"`
 			Year                      int           `json:"year"`
@@ -75,21 +75,21 @@ type Order struct {
 				Region         string  `json:"region"`
 				City           string  `json:"city"`
 				Isp            string  `json:"isp"`
-				Asn            int     `json:"asn"`
+				Asn            float64 `json:"asn"`
 				Organization   string  `json:"organization"`
 				Latitude       float64 `json:"latitude"`
 				Longitude      float64 `json:"longitude"`
-				IsCrawler      int     `json:"is_crawler"`
+				IsCrawler      float64 `json:"is_crawler"`
 				Timezone       string  `json:"timezone"`
 				Mobile         int     `json:"mobile"`
 				Host           string  `json:"host"`
-				Proxy          int     `json:"proxy"`
-				Vpn            int     `json:"vpn"`
-				Tor            int     `json:"tor"`
-				ActiveVpn      int     `json:"active_vpn"`
-				ActiveTor      int     `json:"active_tor"`
-				RecentAbuse    int     `json:"recent_abuse"`
-				BotStatus      int     `json:"bot_status"`
+				Proxy          float64 `json:"proxy"`
+				Vpn            float64 `json:"vpn"`
+				Tor            float64 `json:"tor"`
+				ActiveVpn      float64 `json:"active_vpn"`
+				ActiveTor      float64 `json:"active_tor"`
+				RecentAbuse    float64 `json:"recent_abuse"`
+				BotStatus      float64 `json:"bot_status"`
 				ConnectionType string  `json:"connection_type"`
 				AbuseVelocity  string  `json:"abuse_velocity"`
 				CreatedAt      int     `json:"created_at"`
@@ -98,43 +98,54 @@ type Order struct {
 			Serials                 []string      `json:"serials"`
 			Webhooks                []interface{} `json:"webhooks"`
 			CryptoPayout            bool          `json:"crypto_payout"`
-			CryptoPayoutTransaction interface{}   `json:"crypto_payout_transaction"`
-			PaypalDispute           interface{}   `json:"paypal_dispute"`
-			StatusHistory           []struct {
+			CryptoPayoutTransaction struct {
+				ToAddress    string  `json:"to_address"`
+				FromAddress  string  `json:"from_address"`
+				CryptoAmount float64 `json:"crypto_amount"`
+				Hash         string  `json:"hash"`
+				CreatedAt    int     `json:"created_at"`
+			} `json:"crypto_payout_transaction"`
+			PaypalDispute interface{} `json:"paypal_dispute"`
+			StatusHistory []struct {
 				ID        int    `json:"id"`
 				InvoiceID string `json:"invoice_id"`
 				Status    string `json:"status"`
 				Details   string `json:"details"`
 				CreatedAt int    `json:"created_at"`
 			} `json:"status_history"`
-			CryptoTransactions []interface{} `json:"crypto_transactions"`
-			PaypalClientID     string        `json:"paypal_client_id"`
-			Product            struct {
+			CryptoTransactions []struct {
+				CryptoAmount  float64 `json:"crypto_amount"`
+				Hash          string  `json:"hash"`
+				Confirmations float64 `json:"confirmations"`
+				CreatedAt     int     `json:"created_at"`
+				UpdatedAt     int     `json:"updated_at"`
+			} `json:"crypto_transactions"`
+			Product struct {
 				ID                        int           `json:"id"`
 				Uniqid                    string        `json:"uniqid"`
 				ShopID                    int           `json:"shop_id"`
 				Type                      string        `json:"type"`
 				Title                     string        `json:"title"`
 				Currency                  string        `json:"currency"`
-				Price                     int           `json:"price"`
-				PriceDisplay              int           `json:"price_display"`
+				Price                     float64       `json:"price"`
+				PriceDisplay              float64       `json:"price_display"`
 				Description               string        `json:"description"`
-				ImageAttachment           string        `json:"image_attachment"`
+				ImageAttachment           interface{}   `json:"image_attachment"`
 				FileAttachment            interface{}   `json:"file_attachment"`
-				QuantityMin               int           `json:"quantity_min"`
-				QuantityMax               int           `json:"quantity_max"`
-				QuantityWarning           int           `json:"quantity_warning"`
+				QuantityMin               float64       `json:"quantity_min"`
+				QuantityMax               float64       `json:"quantity_max"`
+				QuantityWarning           float64       `json:"quantity_warning"`
 				Gateways                  []string      `json:"gateways"`
 				CustomFields              []interface{} `json:"custom_fields"`
-				CryptoConfirmationsNeeded int           `json:"crypto_confirmations_needed"`
-				MaxRiskLevel              int           `json:"max_risk_level"`
+				CryptoConfirmationsNeeded float64       `json:"crypto_confirmations_needed"`
+				MaxRiskLevel              float64       `json:"max_risk_level"`
 				BlockVpnProxies           bool          `json:"block_vpn_proxies"`
 				DeliveryText              string        `json:"delivery_text"`
 				ServiceText               string        `json:"service_text"`
 				StockDelimiter            string        `json:"stock_delimiter"`
-				Stock                     int           `json:"stock"`
+				Stock                     float64       `json:"stock"`
 				DynamicWebhook            string        `json:"dynamic_webhook"`
-				SortPriority              int           `json:"sort_priority"`
+				SortPriority              float64       `json:"sort_priority"`
 				Unlisted                  bool          `json:"unlisted"`
 				OnHold                    int           `json:"on_hold"`
 				TermsOfService            string        `json:"terms_of_service"`
@@ -155,15 +166,15 @@ type Order struct {
 				} `json:"feedback"`
 				Theme               string `json:"theme"`
 				ImageAttachmentInfo struct {
-					ID           int    `json:"id"`
-					Uniqid       string `json:"uniqid"`
-					Storage      string `json:"storage"`
-					Name         string `json:"name"`
-					OriginalName string `json:"original_name"`
-					Extension    string `json:"extension"`
-					ShopID       int    `json:"shop_id"`
-					Size         int    `json:"size"`
-					CreatedAt    int    `json:"created_at"`
+					ID           int     `json:"id"`
+					Uniqid       string  `json:"uniqid"`
+					Storage      string  `json:"storage"`
+					Name         string  `json:"name"`
+					OriginalName string  `json:"original_name"`
+					Extension    string  `json:"extension"`
+					ShopID       int     `json:"shop_id"`
+					Size         float64 `json:"size"`
+					CreatedAt    int     `json:"created_at"`
 				} `json:"image_attachment_info"`
 			} `json:"product"`
 		} `json:"order"`
@@ -204,15 +215,15 @@ type CouponResp struct {
 			Type          string      `json:"type"`
 			Code          string      `json:"code"`
 			UseType       string      `json:"use_type"`
-			Discount      int         `json:"discount"`
+			Discount      float64     `json:"discount"`
 			Currency      interface{} `json:"currency"`
-			Used          int         `json:"used"`
-			MaxUses       int         `json:"max_uses"`
+			Used          float64     `json:"used"`
+			MaxUses       float64     `json:"max_uses"`
 			CreatedAt     int         `json:"created_at"`
 			UpdatedAt     int         `json:"updated_at"`
 			UpdatedBy     int         `json:"updated_by"`
 			ProductsBound []string    `json:"products_bound"`
-			ProductsCount int         `json:"products_count"`
+			ProductsCount float64     `json:"products_count"`
 		} `json:"coupons"`
 	} `json:"data"`
 	Message interface{} `json:"message"`
@@ -313,9 +324,9 @@ type UserFeedback struct {
 			ShopID    int         `json:"shop_id"`
 			Message   string      `json:"message"`
 			Reply     interface{} `json:"reply"`
-			Score     int         `json:"score"`
-			Blocked   int         `json:"blocked"`
-			Appealed  int         `json:"appealed"`
+			Score     float64     `json:"score"`
+			Blocked   float64     `json:"blocked"`
+			Appealed  float64     `json:"appealed"`
 			CreatedAt int         `json:"created_at"`
 			UpdatedAt int         `json:"updated_at"`
 			UpdatedBy int         `json:"updated_by"`
@@ -334,19 +345,19 @@ type UserFeedback struct {
 				Total                     float64     `json:"total"`
 				TotalDisplay              float64     `json:"total_display"`
 				CouponID                  interface{} `json:"coupon_id"`
-				Discount                  int         `json:"discount"`
-				DiscountDisplay           int         `json:"discount_display"`
+				Discount                  float64     `json:"discount"`
+				DiscountDisplay           float64     `json:"discount_display"`
 				Currency                  string      `json:"currency"`
-				ExchangeRate              int         `json:"exchange_rate"`
+				ExchangeRate              float64     `json:"exchange_rate"`
 				CryptoExchangeRate        float64     `json:"crypto_exchange_rate"`
 				CustomerEmail             string      `json:"customer_email"`
-				PaypalEmailDelivery       int         `json:"paypal_email_delivery"`
+				PaypalEmailDelivery       float64     `json:"paypal_email_delivery"`
 				PaypalEmail               interface{} `json:"paypal_email"`
 				PaypalOrderID             interface{} `json:"paypal_order_id"`
 				PaypalAuthorizationID     interface{} `json:"paypal_authorization_id"`
 				PaypalCaptureID           interface{} `json:"paypal_capture_id"`
 				PaypalPayerEmail          interface{} `json:"paypal_payer_email"`
-				PaypalFee                 int         `json:"paypal_fee"`
+				PaypalFee                 float64     `json:"paypal_fee"`
 				PaypalFeeCurrency         interface{} `json:"paypal_fee_currency"`
 				PaypalAPICredentials      string      `json:"paypal_api_credentials"`
 				LexOrderID                interface{} `json:"lex_order_id"`
@@ -367,7 +378,7 @@ type UserFeedback struct {
 				CryptoAmount              float64     `json:"crypto_amount"`
 				CryptoReceived            float64     `json:"crypto_received"`
 				CryptoURI                 string      `json:"crypto_uri"`
-				CryptoConfirmationsNeeded int         `json:"crypto_confirmations_needed"`
+				CryptoConfirmationsNeeded float64     `json:"crypto_confirmations_needed"`
 				CryptoWalletVersion       string      `json:"crypto_wallet_version"`
 				Country                   string      `json:"country"`
 				Location                  string      `json:"location"`
@@ -380,8 +391,8 @@ type UserFeedback struct {
 				DeveloperTitle     interface{} `json:"developer_title"`
 				DeveloperWebhook   interface{} `json:"developer_webhook"`
 				DeveloperReturnURL interface{} `json:"developer_return_url"`
-				FeePercentage      int         `json:"fee_percentage"`
-				ToProcess          int         `json:"to_process"`
+				FeePercentage      float64     `json:"fee_percentage"`
+				ToProcess          float64     `json:"to_process"`
 				Status             string      `json:"status"`
 				DayValue           int         `json:"day_value"`
 				Day                string      `json:"day"`
@@ -404,24 +415,24 @@ type UserFeedback struct {
 				Description               string        `json:"description"`
 				ImageAttachment           interface{}   `json:"image_attachment"`
 				FileAttachment            interface{}   `json:"file_attachment"`
-				QuantityMin               int           `json:"quantity_min"`
-				QuantityMax               int           `json:"quantity_max"`
-				QuantityWarning           int           `json:"quantity_warning"`
+				QuantityMin               float64       `json:"quantity_min"`
+				QuantityMax               float64       `json:"quantity_max"`
+				QuantityWarning           float64       `json:"quantity_warning"`
 				Gateways                  []string      `json:"gateways"`
 				CustomFields              []interface{} `json:"custom_fields"`
-				CryptoConfirmationsNeeded int           `json:"crypto_confirmations_needed"`
-				MaxRiskLevel              int           `json:"max_risk_level"`
+				CryptoConfirmationsNeeded float64       `json:"crypto_confirmations_needed"`
+				MaxRiskLevel              float64       `json:"max_risk_level"`
 				BlockVpnProxies           bool          `json:"block_vpn_proxies"`
 				DeliveryText              string        `json:"delivery_text"`
 				ServiceText               string        `json:"service_text"`
 				StockDelimiter            string        `json:"stock_delimiter"`
-				Stock                     int           `json:"stock"`
+				Stock                     float64       `json:"stock"`
 				DynamicWebhook            string        `json:"dynamic_webhook"`
-				SortPriority              int           `json:"sort_priority"`
+				SortPriority              float64       `json:"sort_priority"`
 				Unlisted                  bool          `json:"unlisted"`
-				OnHold                    int           `json:"on_hold"`
+				OnHold                    float64       `json:"on_hold"`
 				TermsOfService            string        `json:"terms_of_service"`
-				Warranty                  int           `json:"warranty"`
+				Warranty                  float64       `json:"warranty"`
 				WarrantyText              string        `json:"warranty_text"`
 				Private                   bool          `json:"private"`
 				CreatedAt                 int           `json:"created_at"`
@@ -449,8 +460,8 @@ type Feedback struct {
 			ShopID        int         `json:"shop_id"`
 			Message       string      `json:"message"`
 			Reply         interface{} `json:"reply"`
-			Score         int         `json:"score"`
-			Appealed      int         `json:"appealed"`
+			Score         float64     `json:"score"`
+			Appealed      float64     `json:"appealed"`
 			AppealOutcome string      `json:"appeal_outcome"`
 			CreatedAt     int         `json:"created_at"`
 			UpdatedAt     int         `json:"updated_at"`
@@ -478,24 +489,24 @@ type Product struct {
 			Description               string        `json:"description"`
 			ImageAttachment           string        `json:"image_attachment"`
 			FileAttachment            interface{}   `json:"file_attachment"`
-			QuantityMin               int           `json:"quantity_min"`
-			QuantityMax               int           `json:"quantity_max"`
-			QuantityWarning           int           `json:"quantity_warning"`
+			QuantityMin               float64       `json:"quantity_min"`
+			QuantityMax               float64       `json:"quantity_max"`
+			QuantityWarning           float64       `json:"quantity_warning"`
 			Gateways                  []string      `json:"gateways"`
 			CustomFields              []interface{} `json:"custom_fields"`
-			CryptoConfirmationsNeeded int           `json:"crypto_confirmations_needed"`
-			MaxRiskLevel              int           `json:"max_risk_level"`
+			CryptoConfirmationsNeeded float64       `json:"crypto_confirmations_needed"`
+			MaxRiskLevel              float64       `json:"max_risk_level"`
 			BlockVpnProxies           bool          `json:"block_vpn_proxies"`
 			DeliveryText              string        `json:"delivery_text"`
 			ServiceText               string        `json:"service_text"`
 			StockDelimiter            string        `json:"stock_delimiter"`
-			Stock                     int           `json:"stock"`
+			Stock                     float64       `json:"stock"`
 			DynamicWebhook            string        `json:"dynamic_webhook"`
-			SortPriority              int           `json:"sort_priority"`
+			SortPriority              float64       `json:"sort_priority"`
 			Unlisted                  bool          `json:"unlisted"`
-			OnHold                    int           `json:"on_hold"`
+			OnHold                    float64       `json:"on_hold"`
 			TermsOfService            string        `json:"terms_of_service"`
-			Warranty                  int           `json:"warranty"`
+			Warranty                  float64       `json:"warranty"`
 			WarrantyText              string        `json:"warranty_text"`
 			Private                   bool          `json:"private"`
 			CreatedAt                 int           `json:"created_at"`
