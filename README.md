@@ -1,6 +1,6 @@
 # goSellix
 Golang binding for the official e-commerce Sellix API.
-This project is still on development.
+This project is still on development and my code is far from being perfect, so if you want to help feel free to do it.
 
 # How to download
     go get -u github.com/Taptiive/goSellix
